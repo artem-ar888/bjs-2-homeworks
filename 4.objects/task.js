@@ -27,15 +27,13 @@ Student.prototype.getAverage = function () {
     if (!this.marks || !this.marks.length) {
         return 0;
     }
-    return Number(
-        this.marks.reduce((acc, item, index, arr) => {
-            acc += item;
-            if (index === arr.length - 1) {
-                return acc / arr.length;
-            }
-            return acc;
-        }, 0)
-    ).toFixed(2);
+    return Number(this.marks.reduce((acc, item, index, arr) => {
+        acc += item;
+        if (index === arr.length - 1) {
+            return acc / arr.length;
+        }
+        return acc;
+    }, 0).toFixed(2));
 }
 
 Student.prototype.exclude = function (reason) {
