@@ -9,20 +9,22 @@ function parseCount(number) {
 }
 
 function validateCount(number) {
-    let decimalNumber;
     try {
-        decimalNumber = parseCount(number);
+        const decimalNumber = parseCount(number);
+        return decimalNumber;
     } catch(error) {
         return error;
     }
-    return decimalNumber;
 }
 
 
 class Triangle {
     constructor(sideA, sideB, sideC) {
-        const sortedSides = [sideA, sideB, sideC].sort((a,b) => a-b);
-        if (sortedSides[0] + sortedSides[1] < sortedSides[2]) {
+        // const sortedSides = [sideA, sideB, sideC].sort((a,b) => a-b);
+        // if (sortedSides[0] + sortedSides[1] <= sortedSides[2]) {
+        //     throw new Error('Треугольник с такими сторонами не существует');
+        // }
+        if((sideA + sideB <= sideC) || (sideA + sideC <= sideB) || (sideB + sideC <= sideA)) {
             throw new Error('Треугольник с такими сторонами не существует');
         }
         this.sideA = sideA;
@@ -36,7 +38,7 @@ class Triangle {
 
     get area() {
         let semiP = this.perimeter / 2;
-        return Number(Math.sqrt(semiP * (semiP - this.sideA) * (semiP - this.sideB) * (semiP - this.sideC)).toFixed(3));
+        return +Math.sqrt(semiP * (semiP - this.sideA) * (semiP - this.sideB) * (semiP - this.sideC)).toFixed(3);
     }
 }
 
@@ -55,21 +57,18 @@ class Triangle {
 // }
 
 
-class wrongTriangle {
-    get area() {
-        return 'Ошибка! Треугольник не существует';
-    }
-
-    get perimeter() {
-        return 'Ошибка! Треугольник не существует';
-    }
-}
-
-
 function getTriangle(sideA, sideB, sideC) {
-    try {var triangle = new Triangle(sideA, sideB, sideC)
+    try {
+        let triangle = new Triangle(sideA, sideB, sideC);
+        return triangle;
     } catch(error) {
-        return new wrongTriangle;
+        return {
+            get area() {
+                return 'Ошибка! Треугольник не существует';
+            },
+            get perimeter() {
+                return 'Ошибка! Треугольник не существует';
+            }
+        };
     }
-    return triangle;
 }
